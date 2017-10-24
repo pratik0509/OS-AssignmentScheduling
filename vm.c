@@ -108,10 +108,10 @@ static struct kmap {
   uint phys_end;
   int perm;
 } kmap[] = {
- { (void*)KERNBASE, 0,             EXTMEM,    PTE_W}, // I/O space
- { (void*)KERNLINK, V2P(KERNLINK), V2P(data), 0},     // kern text+rodata
- { (void*)data,     V2P(data),     PHYSTOP,   PTE_W}, // kern data+memory
- { (void*)DEVSPACE, DEVSPACE,      0,         PTE_W}, // more devices
+  { (void*)KERNBASE, 0,             EXTMEM,    PTE_W}, // I/O space
+  { (void*)KERNLINK, V2P(KERNLINK), V2P(data), 0},     // kern text+rodata
+  { (void*)data,     V2P(data),     PHYSTOP,   PTE_W}, // kern data+memory
+  { (void*)DEVSPACE, DEVSPACE,      0,         PTE_W}, // more devices
 };
 
 // Set up kernel part of a page table.
@@ -337,7 +337,7 @@ copyuvm(pde_t *pgdir, uint sz)
   }
   return d;
 
-bad:
+ bad:
   freevm(d);
   return 0;
 }
@@ -389,4 +389,3 @@ copyout(pde_t *pgdir, uint va, void *p, uint len)
 // Blank page.
 //PAGEBREAK!
 // Blank page.
-

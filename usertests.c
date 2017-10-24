@@ -1698,8 +1698,8 @@ fsfull()
 void
 uio()
 {
-  #define RTC_ADDR 0x70
-  #define RTC_DATA 0x71
+#define RTC_ADDR 0x70
+#define RTC_DATA 0x71
 
   ushort port = 0;
   uchar val = 0;

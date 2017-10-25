@@ -339,6 +339,12 @@ waitx(int *wtime, int *rtime, int *ttime)
       havekids = 1;
       if(p->state == ZOMBIE){
         // Found one.
+
+        // Assign the wait and running time values
+        *ttime = p->total_time - p->wait_time + 1;
+        *wtime = p->wait_time;
+        *rtime = p->run_time + 1;
+
         pid = p->pid;
         kfree(p->kstack);
         p->kstack = 0;
@@ -352,11 +358,6 @@ waitx(int *wtime, int *rtime, int *ttime)
         return pid;
       }
     }
-
-    // Assign the wait and running time values
-    *ttime = curproc->total_time - curproc->wait_time;
-    *wtime = curproc->wait_time;
-    *rtime = curproc->run_time;
 
     // No point waiting if we don't have any children.
     if(!havekids || curproc->killed){

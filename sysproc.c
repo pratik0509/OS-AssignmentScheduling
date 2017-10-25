@@ -89,3 +89,24 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// return the pid of the process
+// set the running, wait and total running time of the process
+int
+sys_waitx(void)
+{
+  int *wtime;
+  int *rtime;
+  int *ttime;
+
+  if(argptr(0, (char**)&wtime, sizeof(int)) < 0)
+    return -1;
+
+  if(argptr(1, (char**)&rtime, sizeof(int)) < 0)
+    return -1;
+
+  if(argptr(2, (char**)&ttime, sizeof(int)) < 0)
+    return -1;
+
+  return waitx(wtime, rtime, ttime);
+}

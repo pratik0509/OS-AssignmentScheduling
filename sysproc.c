@@ -110,3 +110,16 @@ sys_waitx(void)
 
   return waitx(wtime, rtime, ttime);
 }
+
+// return the previous process priority
+// set the process priority of the process
+int
+sys_set_priority(void)
+{
+  int prior;
+
+  if (argint(0, &prior) < 0)
+    return -1;
+
+  return set_priority(prior);
+}

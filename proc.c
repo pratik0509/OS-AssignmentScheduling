@@ -117,7 +117,7 @@ allocproc(void)
   p->total_time  = 0;
   p->wait_time   = 0;
   p->run_time    = 0;
-
+  p->priority    = DEFAULT_PRIORITY;
   return p;
 }
 
@@ -369,6 +369,23 @@ waitx(int *wtime, int *rtime, int *ttime)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
+
+// Assign the Process Priority to the process
+int
+set_priority(int prior)
+{
+  struct proc *curproc;
+  int init_prior;
+  curproc = myproc();
+  // Acquire the lock on process table
+  acquire(&ptable.lock);
+  init_prior = curproc->priority;
+  curproc->priority = prior;
+  // Release the lock on process table
+  release(&ptable.lock);
+  return init_prior;
+}
+
 
 //PAGEBREAK: 42
 // Per-CPU process scheduler.

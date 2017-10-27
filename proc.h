@@ -1,3 +1,5 @@
+#define DEFAULT_PRIORITY 60
+
 // Per-CPU state
 struct cpu {
   uchar apicid;                // Local APIC ID
@@ -54,6 +56,7 @@ struct proc {
   int total_time;              // Process total time
   int wait_time;               // Process wait time
   int run_time;                // Process actual run time
+  int priority;                // Process priority
 };
 
 // Process memory is laid out contiguously, low addresses first:

@@ -376,11 +376,17 @@ set_priority(int prior)
 {
   struct proc *curproc;
   int init_prior;
+  if(prior < 0)
+    prior = 0;
+  else if(prior > 100)
+    prior = 100;
   curproc = myproc();
   // Acquire the lock on process table
   acquire(&ptable.lock);
   init_prior = curproc->priority;
   curproc->priority = prior;
+  curproc->state = RUNNABLE;
+  sched();
   // Release the lock on process table
   release(&ptable.lock);
   return init_prior;

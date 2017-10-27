@@ -17,7 +17,7 @@ int main (int argc,char *argv[])
     printf(1, "exec %s failed\n", argv[1]);
   }else{
     status = waitx(&a, &b, &c);
-    printf(1, "Wait Time = %d\n Run Time = %d Total time = %d with Status %d \n", a, b, c, status);
+    printf(1, "Wait Time = %d\n Run Time = %d Total time = %d with PID = %d \n", a, b, c, status);
   }
   exit();
 }

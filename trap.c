@@ -54,12 +54,13 @@ trap(struct trapframe *tf)
       wakeup(&ticks);
       release(&tickslock);
     }
-    if(myproc()) {
-      myproc()->total_time++;
+    if(myproc()){
+      myproc()->end_time=ticks;
+      (myproc()->total_time)++;
       if(myproc()->state == SLEEPING)
-        myproc()->wait_time++;
+        (myproc()->wait_time)++;
       else if(myproc()->state == RUNNING)
-        myproc()->run_time++;
+        (myproc()->run_time)++;
     }
     lapiceoi();
     break;

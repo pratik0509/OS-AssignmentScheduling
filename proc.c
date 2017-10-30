@@ -28,7 +28,8 @@ pinit(void)
 
 // Must be called with interrupts disabled
 int
-cpuid() {
+cpuid()
+{
   return mycpu()-cpus;
 }
 
@@ -55,7 +56,8 @@ mycpu(void)
 // Disable interrupts so that we are not rescheduled
 // while reading proc from the cpu structure
 struct proc*
-myproc(void) {
+myproc(void)
+{
   struct cpu *c;
   struct proc *p;
   pushcli();
@@ -71,8 +73,7 @@ myproc(void) {
 // state required to run in the kernel.
 // Otherwise return 0.
 static struct proc*
-allocproc(void)
-{
+allocproc(void) {
   struct proc *p;
   char *sp;
 
@@ -341,7 +342,7 @@ waitx(int *wtime, int *rtime, int *ttime)
         // Found one.
 
         // Assign the wait and running time values
-        *ttime = p->total_time - p->wait_time + 1;
+        *ttime = p->total_time;
         *wtime = p->wait_time;
         *rtime = p->run_time + 1;
 
@@ -397,7 +398,7 @@ set_priority(int prior)
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
 // Scheduler never returns.  It loops, doing:
-//  - choose a process to run
+//  - choose highest priority process to run
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
@@ -530,6 +531,8 @@ sleep(void *chan, struct spinlock *lk)
   // Go to sleep.
   p->chan = chan;
   p->state = SLEEPING;
+  (p->wait_time)++;
+  (p->total_time)++;
 
   sched();
 
